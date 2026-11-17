@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">options_menu</string>
+    <string name="action_add_record">Add record</string>
+    <string name="action_view_records">View records</string>
+    <string name="action_about">About</string>
+    <string name="et_record_name_hint">Record name</string>
+    <string name="tv_status_format">Records: %d</string>
+    <string name="error_enter_record_name">Enter a record name</string>
+    <string name="toast_record_added">Record added</string>
+    <string name="toast_about">Options Menu Lab - ICS 2300</string>
+    <string name="empty_records">No records yet</string>
+</resources>
