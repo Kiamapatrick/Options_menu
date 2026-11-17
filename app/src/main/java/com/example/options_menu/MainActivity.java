@@ -2,6 +2,8 @@ package com.example.options_menu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -29,11 +31,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_main);
+
+        // Calculate action bar height
+        TypedValue tv = new TypedValue();
+        int actionBarHeight = 0;
+        if (getTheme().resolveAttribute(androidx.appcompat.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        final int abHeight = actionBarHeight;
+        final int dp16 = (int) (16 * getResources().getDisplayMetrics().density);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(bars.left + dp16, bars.top + abHeight + dp16, bars.right + dp16, bars.bottom + dp16);
             return insets;
         });
 
@@ -66,10 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Debug logging for menu selection
+        Log.d("OptionsMenu", "Selected item id=" + item.getItemId() + " title=" + item.getTitle());
         // Handle menu item clicks by stable ID (never by title)
         int id = item.getItemId();
         if (id == R.id.action_add_record) {
             String name = etRecordName.getText().toString().trim();
+            Log.d("OptionsMenu", "Add record name='" + name + "' size before=" + records.size());
             if (name.isEmpty()) {
                 // Show error on the EditText (stays visible, not a Toast)
                 etRecordName.setError(getString(R.string.error_enter_record_name));
