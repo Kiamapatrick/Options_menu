@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
             if (saved != null) {
                 records = new ArrayList<>(saved);
             }
-            updateStatus();
         }
+        updateStatus();
     }
 
     @Override
